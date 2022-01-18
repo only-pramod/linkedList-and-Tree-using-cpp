@@ -112,7 +112,39 @@ Node* reverseR(Node* root){
  root->next=NULL;
  return rest;
 }
+//middle element of linked list
+Node* middelElement(Node* start, Node* last)
+{
+    if (start == NULL)
+        return NULL;
+ 
+    struct Node* slow = start;
+    struct Node* fast = start -> next;
+    while (fast != last)
+    {
+        fast = fast -> next;
+        if (fast != last)
+        {
+            slow = slow -> next;
+            fast = fast -> next;
+        }
+    }
+    return slow;
+}
+//binary search on linkedList
+Node* binarySearch(Node* root,int value){
 
+  Node* start=root;
+  Node* last=NULL;
+  do{
+    Node* mid=middelElement(start,last);
+    if(mid==NULL)return NULL;
+    if(mid->data == value)return mid;
+    else if(mid->data < value)start=mid->next;
+    else last=mid;
+  } while(last==NULL||last!=start);
+  return NULL;
+}
 int main() {
   Node* head=NULL;
   Node* second=NULL;
@@ -149,3 +181,8 @@ printR(head);
 cout<<endl<<"reverse"<<endl;
 head=reverseR(head);
 print(head);
+Node* middle=middelElement(head,NULL); 
+cout<<"middle element "<<middle->data<<endl;
+if(binarySearch(head,4))cout<<"found";
+
+}
