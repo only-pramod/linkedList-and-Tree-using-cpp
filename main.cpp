@@ -6,7 +6,7 @@ struct Node{
   int data;
   Node* next;
 };
-
+//print liked list
 void print(Node *root){
   Node* newNode=root;
   while(newNode!=NULL){
@@ -15,7 +15,7 @@ void print(Node *root){
   }
   cout<<endl;
 }
-
+//add element at start
 Node* addElementStart(Node *root,int val){
 Node* newNode=new Node;
 newNode->data=val;
@@ -23,6 +23,7 @@ newNode->next=root;
 return newNode;
 }
 
+//at end
 Node* addElementEnd(Node *root,int val){
   Node* node=root;
   while(node->next!=NULL){
@@ -34,7 +35,8 @@ Node* addElementEnd(Node *root,int val){
   newNode->next=NULL;
   return root;
 }
-//
+
+// at kth position start from 0
 Node* addElementK(Node *root,int val,int k){
   Node* node=root;
 
@@ -58,7 +60,7 @@ Node* addElementK(Node *root,int val,int k){
   return root;
   }
 }
-
+//remove kth element
 Node* removeElementK(Node* root,int k){
   Node* node=root;
   Node* prevNode=NULL;
@@ -76,7 +78,8 @@ Node* removeElementK(Node* root,int k){
   return root;
   }
 }
-///
+
+//reverse linked list
 Node* reverse(Node *root){
   Node* current=root;
   Node* Next=NULL;
@@ -106,44 +109,41 @@ void printR(Node* root){
 Node* reverseR(Node* root){
 
  if(root==NULL||root->next==NULL)return root;
-
  Node* rest=reverseR(root->next);
  root->next->next=root;
  root->next=NULL;
  return rest;
 }
+
 //middle element of linked list
-Node* middelElement(Node* start, Node* last)
-{
-    if (start == NULL)
-        return NULL;
- 
-    struct Node* slow = start;
-    struct Node* fast = start -> next;
-    while (fast != last)
-    {
-        fast = fast -> next;
-        if (fast != last)
-        {
-            slow = slow -> next;
-            fast = fast -> next;
-        }
-    }
-    return slow;
+Node* middelElement(Node* root,Node* last){
+  Node* slow=root;
+  Node* fast=root;
+  if(root==NULL)return NULL;
+  while(fast!=last&&fast->next!=last){
+    fast=fast->next->next;
+    slow=slow->next;
+  }
+  return slow;
 }
+
 //binary search on linkedList
 Node* binarySearch(Node* root,int value){
 
-  Node* start=root;
-  Node* last=NULL;
-  do{
-    Node* mid=middelElement(start,last);
-    if(mid==NULL)return NULL;
-    if(mid->data == value)return mid;
-    else if(mid->data < value)start=mid->next;
-    else last=mid;
-  } while(last==NULL||last!=start);
-  return NULL;
+  Node* start = root;
+  Node* last = NULL;
+    while(last != start)
+    {
+        Node* mid = middelElement(start, last);
+        if (mid -> data == value)
+            return mid;
+        else if (mid -> data < value)
+            start = mid -> next;
+        else
+            last = mid;
+    } 
+    // value not present
+    return NULL;
 }
 int main() {
   Node* head=NULL;
@@ -152,12 +152,14 @@ int main() {
   head=new Node();
   second=new Node();
   third = new Node();
+  
 head->data=1;
 head->next=second;
 second->data=2;
 second->next=third;
 third->data=3;
 third->next=NULL;
+  
 cout<<"linked list"<<endl;
 print(head);
 cout<<"add element at start"<<endl;
@@ -175,6 +177,7 @@ print(head);
 cout<<"reverse"<<endl;
 head=reverse(head);
 print(head);
+  
 cout<<"using resursion ---------"<<endl;
 cout<<"print linked list"<<endl;
 printR(head);
@@ -183,6 +186,7 @@ head=reverseR(head);
 print(head);
 Node* middle=middelElement(head,NULL); 
 cout<<"middle element "<<middle->data<<endl;
-if(binarySearch(head,4))cout<<"found";
-
+Node* ans=binarySearch(head,4);
+if(ans)cout<<"found "<<ans->data<<endl;
+else cout<<"not found"<<endl;
 }
