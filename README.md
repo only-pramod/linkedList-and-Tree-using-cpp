@@ -1,2 +1,2 @@
-# linkedList-using-cpp
-standard Linked list questions
+# linkedList and Tree using C++
+standard Linked list and tree questions
